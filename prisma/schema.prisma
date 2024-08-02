@@ -23,3 +23,12 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
 }
+
+model Catagory {
+  id Int @id @default(autoincrement())
+
+  name String @unique
+  products Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
