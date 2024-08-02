@@ -1,6 +1,6 @@
 import { Container } from '@/components/shared/Container';
 import { Filters } from '@/components/shared/Filters';
-import { ProductCard } from '@/components/shared/ProductCard';
+import { ProductsGroupList } from '@/components/shared/ProductsGroupList';
 import { Title } from '@/components/shared/Title';
 import { TopBar } from '@/components/shared/TopBar';
 
@@ -12,9 +12,54 @@ const Home = () => {
       </Container>
       <TopBar />
       <Container className='pb-14 mt-10'>
-        <div className='flex gap-[60px]'>
+        <div className='flex gap-[90px]'>
           <div className='w-[250px]'>
             <Filters />
+          </div>
+          
+          <div className='flex-1'>
+            <div className='flex flex-col gap-16'>
+              <ProductsGroupList title='Популярные' items={
+                [
+                  {
+                    id: 1,
+                    name: 'Пепперони',
+                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 350 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Пепперони',
+                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 350 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Пепперони',
+                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 350 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Пепперони',
+                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 350 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Пепперони',
+                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 350 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Пепперони',
+                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 350 }],
+                  },
+                ]} 
+              />
+            </div>
           </div>
         </div>
       </Container>
