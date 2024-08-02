@@ -1,11 +1,16 @@
-import { Button } from "@/components/ui/Button";
-import Image from "next/image";
+import { Categories } from "@/components/shared/categories";
+import { Container } from "@/components/shared/container";
+import { Title } from "@/components/shared/title";
 
-export default function Home() {
+const Home = () => {
   return (
     <>
-      <h1>Homepage</h1>
-      <Button variant="default">Корзина</Button>
+      <Container className='mt-10'>
+        <Title text='Все пиццы' size='lg' className='font-extrabold' />
+        <Categories />
+      </Container>
     </>
-  );
+  )
 }
+
+export default Home;
