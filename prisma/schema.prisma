@@ -32,3 +32,19 @@ model Catagory {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Product {
+  id Int @id @default(autoincrement())
+
+  name String
+  imageUrl String
+
+  ingredients Ingredients[]
+  items ProductVariation[]
+
+  catagory Catagory @relation(fields: [catagoryId], references: [id])
+  catagoryId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
