@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { ArrowUpDown } from "lucide-react";
 import React from "react";
 import { SortPopup } from "./sortPopup";
 import { Categories } from "./categories";
