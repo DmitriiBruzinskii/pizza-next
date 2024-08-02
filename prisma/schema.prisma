@@ -64,3 +64,18 @@ model ProductVariation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Ingredients {
+  id Int @id @default(autoincrement())
+
+  name String 
+  price Int
+  imageUrl String
+
+  products Product[]
+
+  cartItems CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
