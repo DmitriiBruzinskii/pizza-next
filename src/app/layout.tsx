@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/shared/header";
+import { Header } from "@/components/shared/Header";
 
 const nunito = Nunito({
   subsets: ['cyrillic'],
@@ -10,7 +10,7 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Next pizza"
+  title: "Next Pizza"
 };
 
 export default function RootLayout({

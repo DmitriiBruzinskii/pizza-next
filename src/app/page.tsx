@@ -1,7 +1,8 @@
-import { Container } from '@/components/shared/container';
-import { Filters } from '@/components/shared/filters';
-import { Title } from '@/components/shared/title';
-import { TopBar } from '@/components/shared/topBar';
+import { Container } from '@/components/shared/Container';
+import { Filters } from '@/components/shared/Filters';
+import { ProductCard } from '@/components/shared/ProductCard';
+import { Title } from '@/components/shared/Title';
+import { TopBar } from '@/components/shared/TopBar';
 
 const Home = () => {
   return (
