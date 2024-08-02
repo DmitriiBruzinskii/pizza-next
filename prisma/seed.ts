@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
+import { categories, ingredients, products } from './constants';
 
 const prisma = new PrismaClient();
 
@@ -18,7 +19,19 @@ async function up() {
         role: 'ADMIN',
       }
     ]
-  })
+  });
+
+  await prisma.category.createMany({
+    data: categories
+  });
+
+  await prisma.ingredients.createMany({
+    data: ingredients
+  });
+
+  await prisma.product.createMany({
+    data: products
+  });
 }
  
 async function down() {
