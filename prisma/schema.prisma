@@ -14,11 +14,14 @@ model User {
   fullName String
   email String @unique
   password String
+  role UserRole @default(USER)
 
-  cartItems CartItem[]
-  cart Cart[]
+  provider String?
+  providerId String?
 
-  orders Order[]
+  cart Cart?
+  orders Order[]  
+  verificationCode VerificationCode?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
@@ -84,7 +87,7 @@ model Cart {
   id Int @id @default(autoincrement())
 
   user User? @relation(fields: [userId], references: [id])
-  userId Int
+  userId Int @unique
 
   items CartItem[]
 
@@ -106,9 +109,6 @@ model CartItem {
   productId Int
 
   quantity Int @default(1)
-
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
 
   ingredients Ingredients[]
 
@@ -144,4 +144,20 @@ enum OrderStatus {
   PENDING
   SUCCEEDED
   CANCELLED
+}
+
+model VerificationCode {
+  id Int @id @default(autoincrement())
+
+  code String @unique
+  user User @relation(fields: [userId], references: [id])
+  userId Int @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }
