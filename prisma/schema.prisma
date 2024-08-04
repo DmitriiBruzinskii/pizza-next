@@ -12,6 +12,7 @@ model User {
   id       Int    @id @default(autoincrement())
   fullName String
   phone    String @unique
+  email    String @unique
 
   role         UserRole          @default(USER)
   orders       Order[]
@@ -28,7 +29,8 @@ model Product {
   name     String
   imageUrl String
   active   Boolean @default(false)
-
+  categoryId Int?
+  
   pizzas Pizza[]
 
   createdAt DateTime @default(now())
