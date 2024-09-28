@@ -1,18 +1,28 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Api } from '../../../services/apiClients';
 import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
 import { useClickAway } from 'react-use';
 import Link from 'next/link';
+import { Product } from '@prisma/client';
 
 export const SearchInput = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
   const [focused, setFocused] = useState(false);
   const ref = useRef(null);
 
   useClickAway(ref, () => {
     setFocused(false);
   });
+
+  useEffect(() => {
+    Api.products.search(searchQuery).then(items => {
+      setProducts(items);
+    });
+  }, [searchQuery]);
 
   return (
     <>
@@ -25,13 +35,22 @@ export const SearchInput = () => {
           type="text"
           placeholder="Найти пиццу..."
           onFocus={() => setFocused(true)}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        <div className={cn('absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 opacity-0 z-30', focused && 'visible opacity-100 top-12')}>
-          <Link href='/product/1' className='flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10'>
-            <img className='rounded-sm w-8 h-8' src='/pizza.png' alt='Pizza' />
-            <span>Пицца</span>
-          </Link>
+        <div className={cn(
+          'absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 opacity-0 z-30', 
+          focused && 'visible opacity-100 top-12'
+        )}>
+          {products.map(product => (
+            <Link 
+              key={product.id} 
+              href={`/products/${product.id}`}
+              className='flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10'>
+              <img className='rounded-sm w-8 h-8' src={product.imageUrl} alt={product.name} />
+              <span>{product.name}</span>
+            </Link>
+          ))}
         </div>
       </div>
     </>
