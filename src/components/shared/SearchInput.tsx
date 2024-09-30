@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Api } from '../../../services/apiClients';
 import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
-import { useClickAway } from 'react-use';
+import { useClickAway, useDebounce } from 'react-use';
 import Link from 'next/link';
 import { Product } from '@prisma/client';
 
@@ -18,11 +18,19 @@ export const SearchInput = () => {
     setFocused(false);
   });
 
-  useEffect(() => {
+  useDebounce(() => {
     Api.products.search(searchQuery).then(items => {
       setProducts(items);
     });
-  }, [searchQuery]);
+  }, 
+  250,
+  [searchQuery]);
+
+  const onClickItem = () => {
+    setFocused(false);
+    setSearchQuery('');
+    setProducts([]);
+  }
 
   return (
     <>
@@ -35,23 +43,27 @@ export const SearchInput = () => {
           type="text"
           placeholder="Найти пиццу..."
           onFocus={() => setFocused(true)}
+          value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        <div className={cn(
-          'absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 opacity-0 z-30', 
-          focused && 'visible opacity-100 top-12'
-        )}>
-          {products.map(product => (
-            <Link 
-              key={product.id} 
-              href={`/products/${product.id}`}
-              className='flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10'>
-              <img className='rounded-sm w-8 h-8' src={product.imageUrl} alt={product.name} />
-              <span>{product.name}</span>
-            </Link>
-          ))}
-        </div>
+        {products.length > 0 && (
+          <div className={cn(
+            'absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 opacity-0 z-30', 
+            focused && 'visible opacity-100 top-12'
+          )}>
+            {products.map(product => (
+              <Link 
+                onClick={onClickItem}
+                key={product.id} 
+                href={`/product/${product.id}`}
+                className='flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10'>
+                <img className='rounded-sm w-8 h-8' src={product.imageUrl} alt={product.name} />
+                <span>{product.name}</span>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
