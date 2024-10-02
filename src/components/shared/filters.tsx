@@ -11,12 +11,9 @@ interface Props {
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
-  const { ingredients, loading } = useFilterIngredients();
+  const { ingredients, loading, onAddId, selectedIds } = useFilterIngredients();
 
-  const items = ingredients.map((item) => ({
-    value: String(item.id),
-    text: item.name,
-  }));
+  const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
 
   return (
     <div className={className}>
@@ -38,6 +35,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
         defaultItems={items.slice(0, 6)}
         items={items}
         loading={loading}
+        selectedIds={selectedIds}
+        onClickCheckbox={onAddId}
       />
     </div>
   )
