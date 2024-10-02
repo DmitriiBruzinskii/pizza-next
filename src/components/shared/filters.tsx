@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { FC, useState } from 'react';
 import { useFilterIngredients } from '../../../hooks/useFilterIngredients';
 import { Title } from './Title';
 import { Input, RangeSlider } from '../ui';
@@ -10,7 +10,16 @@ interface Props {
   className?: string;
 }
 
-export const Filters: React.FC<Props> = ({ className }) => {
+interface PriceProps {
+  min: number;
+  max: number;
+}
+
+export const Filters: FC<Props> = ({ className }) => {
+  const [price, setPrice] = useState<PriceProps>({ min: 0, max: 1000 });
+
+  const updatePrice = (name: keyof PriceProps, value: number) => setPrice({ ...price, [name]: value });
+
   const { ingredients, loading, onAddId, selectedIds } = useFilterIngredients();
 
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
@@ -22,10 +31,30 @@ export const Filters: React.FC<Props> = ({ className }) => {
       <div className='mt-5 border-y border-y-neutral-100 py-6 pb-7'>
         <p className='font-bold mb-3'>Цена от и до:</p>
         <div className='flex gap-3 mb-5'>
-          <Input type='number' placeholder='0' min={0} max={30000} defaultValue={0} />
-          <Input type='number' min={100} max={30000} placeholder='30000' />
+          <Input 
+            type='number' 
+            placeholder='0' 
+            min={0} 
+            max={1000} 
+            value={String(price.min)} 
+            onChange={(e) => updatePrice('min', Number(e.target.value))} 
+          />
+          <Input 
+            type='number' 
+            placeholder='1000' 
+            min={100} 
+            max={1000} 
+            value={price.max > 1000 ? '1000' : String(price.max)} 
+            onChange={(e) => updatePrice('max', Math.min(Number(e.target.value), 1000))} 
+          /> 
         </div>
-        <RangeSlider min={0} max={5000} step={10} value={[0, 5000]} />
+        <RangeSlider 
+          min={0} 
+          max={1000} 
+          step={10} 
+          value={[price.min, price.max]} 
+          onValueChange={([min, max]) => setPrice({min, max})} 
+        />
       </div>
 
       <CheckboxFiltersGroup
