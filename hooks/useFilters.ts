@@ -34,7 +34,7 @@ export const useFilters = (): ReturnProps => {
     max: Number(searchParams.get('max')) 
   });
 
-  const updatePrice = (name: keyof PriceProps, value: number) => setPrices({ ...prices, [name]: value });
+  const updatePrice = (name: keyof PriceProps, value: number) => setPrices(prev => ({...prev, [name]: value }));
 
 
   return {
