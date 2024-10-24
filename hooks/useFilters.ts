@@ -14,7 +14,14 @@ export interface Filters {
   prices: PriceProps;
 }
 
-export const useFilters = (): Filters => {
+interface ReturnProps extends Filters {
+  setPrices: (name: keyof PriceProps, value: number) => void;
+  setToggleIngredients: (value: string) => void;
+  setPizzaSizes: (value: string) => void;
+  setToggleTypes: (value: string) => void;
+}
+
+export const useFilters = (): ReturnProps => {
   const searchParams = useSearchParams();
   
   const initializeSet = (arg: string) => useSet(new Set<string>(searchParams.get(arg)?.split(',') || []));
