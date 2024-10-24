@@ -14,7 +14,7 @@ export const useQueryFilters = (filters: Filters) => {
       ingredients: Array.from(filters.selectedIngredients)
     };
 
-    const query = qs.stringify(filters, { arrayFormat: 'comma' } );
+    const query = qs.stringify(params, { arrayFormat: 'comma' } );
 
     router.push(`?${query}`, { scroll: false });
   }, [filters, router]);
