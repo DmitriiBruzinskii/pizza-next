@@ -14,19 +14,14 @@ export interface Filters {
   prices: PriceProps;
 }
 
-interface ReturnProps extends Filters {
-  setPrices: (name: keyof PriceProps, value: number) => void;
-  setToggleIngredients: (value: string) => void;
-  setPizzaSizes: (value: string) => void;
-  setToggleTypes: (value: string) => void;
-}
-
-export const useFilters = (): ReturnProps => {
+export const useFilters = (): Filters => {
   const searchParams = useSearchParams();
   
-  const [selectedIngredients, { toggle: toggleIngredients }] = useSet(new Set<string>(searchParams.get('ingredients')?.split(',') || []));
-  const [pizzaSizes, { toggle: toggleSizes }] = useSet(new Set<string>(searchParams.get('pizzaSizes')?.split(',') || []));
-  const [pizzaTypes, { toggle: toggleTypes }] = useSet(new Set<string>(searchParams.get('pizzaTypes')?.split(',') || []));
+  const initializeSet = (arg: string) => useSet(new Set<string>(searchParams.get(arg)?.split(',') || []));
+
+  const [selectedIngredients, { toggle: toggleIngredients }] = initializeSet('ingredients');
+  const [pizzaSizes, { toggle: toggleSizes }] = initializeSet('pizzaSizes');
+  const [pizzaTypes, { toggle: toggleTypes }] = initializeSet('pizzaTypes');
   const [prices, setPrices] = useState<PriceProps>({ 
     min: Number(searchParams.get('min')), 
     max: Number(searchParams.get('max')) 
