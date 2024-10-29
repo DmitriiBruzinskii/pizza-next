@@ -3,8 +3,20 @@ import { Filters } from '@/components/shared/Filters';
 import { ProductsGroupList } from '@/components/shared/ProductsGroupList';
 import { Title } from '@/components/shared/Title';
 import { TopBar } from '@/components/shared/TopBar';
+import { prisma } from '../../prisma/prisma-client';
 
-const Home = () => {
+const Home = async () => {
+  const categories = await prisma.category.findMany({
+    include: {
+      products: {
+        include: {
+          ingredients: true,
+          items: true,
+        }
+      }
+    }
+  });
+
   return (
     <>
       <Container className='mt-10'>
@@ -19,46 +31,16 @@ const Home = () => {
           
           <div className='flex-1'>
             <div className='flex flex-col gap-16'>
-              <ProductsGroupList title='Популярные' items={
-                [
-                  {
-                    id: 1,
-                    name: 'Пепперони',
-                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
-                    items: [{ price: 350 }],
-                  },
-                  {
-                    id: 2,
-                    name: 'Пепперони',
-                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
-                    items: [{ price: 350 }],
-                  },
-                  {
-                    id: 3,
-                    name: 'Пепперони',
-                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
-                    items: [{ price: 350 }],
-                  },
-                  {
-                    id: 4,
-                    name: 'Пепперони',
-                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
-                    items: [{ price: 350 }],
-                  },
-                  {
-                    id: 5,
-                    name: 'Пепперони',
-                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
-                    items: [{ price: 350 }],
-                  },
-                  {
-                    id: 6,
-                    name: 'Пепперони',
-                    imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
-                    items: [{ price: 350 }],
-                  },
-                ]} 
-              />
+              {
+                categories.map((category) => (
+                  <ProductsGroupList 
+                    key={category.id}
+                    title={category.name}
+                    categoryId={category.id}
+                    items={category.products}
+                  />
+                ))
+              }
             </div>
           </div>
         </div>
