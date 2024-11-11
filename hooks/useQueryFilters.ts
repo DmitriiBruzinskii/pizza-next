@@ -8,7 +8,6 @@ export const useQueryFilters = (filters: Filters) => {
 
   useEffect(() => {
     const params = {
-      ...filters.prices,
       pizzaTypes: Array.from(filters.pizzaTypes),
       pizzaSizes: Array.from(filters.pizzaSizes),
       ingredients: Array.from(filters.selectedIngredients)
@@ -17,5 +16,5 @@ export const useQueryFilters = (filters: Filters) => {
     const query = qs.stringify(params, { arrayFormat: 'comma' } );
 
     router.push(`?${query}`, { scroll: false });
-  }, [filters, router]);
+  }, [filters]);
 }
