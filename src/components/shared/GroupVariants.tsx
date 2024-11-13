@@ -3,7 +3,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-type Variant = {
+export type Variant = {
   name: string;
   value: string;
   disabled?: boolean;
@@ -11,13 +11,12 @@ type Variant = {
 
 interface Props {
   items: readonly Variant[];
-  defaultValue?: string;
   onClick?: (value: Variant['value']) => void;
-  selectedValue?: Variant['value'];
+  value?: Variant['value'];
   className?: string;
 };
 
-export const GroupVariants: React.FC<Props> = ({ items, onClick, className, selectedValue }) => {
+export const GroupVariants: React.FC<Props> = ({ items, onClick, className, value }) => {
   return (
     <div className={cn(className, "flex justify-between bg-[#F3F3F7] rounded-3xl p-1 select-none")}>
       {items.map((item) => (
@@ -25,13 +24,14 @@ export const GroupVariants: React.FC<Props> = ({ items, onClick, className, sele
           key={item.name}
           onClick={() => onClick?.(item.value)}
           className={cn(
-            "flex items-center justify-center h-[30px] px-5 flex-1 rounded-3xl transition-all duration-400 text-sm",
+            'flex items-center justify-center h-[30px] px-5 flex-1 rounded-3xl transition-all duration-400 text-sm',
             {
-              'bg-white shadow': item.value === selectedValue,
-              'text-gray-500 opacity-50 pointer-events-none': item.disabled
-            }
-          )}
-        ></button>
+              'bg-white shadow': item.value === value,
+              'text-gray-400 opacity-50 pointer-events-none': item.disabled,
+            },
+          )}> 
+          {item.name}
+        </button>
       ))}
     </div>
   )
