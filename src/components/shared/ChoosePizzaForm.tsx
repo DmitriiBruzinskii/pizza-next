@@ -36,6 +36,21 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   const totalPrice = pizzaPrice + totalIngredientsPrice;
 
   const textDetails = `${size} см, ${mapPizzaType[type]} пицца`;
+
+  const availableTypes = items.filter((item) => item.pizzaType === type);
+  const availableSizes = pizzaSizes.map((item) => ({
+    name: item.name,
+    value: item.value,
+    disabled: !availableTypes.some((pizza) => Number(pizza.size) === Number(item.value))
+  }));
+
+  useEffect(() => {
+    const isAvailableSize = availableSizes?.find((item) => Number(item.value) === size && !item.disabled);
+    const availableSize = availableSizes?.find((item) => !item.disabled);
+
+    if (!isAvailableSize && availableSize) setSize(Number(availableSize.value) as PizzaSize);
+  }, [type]);
+
   return (
     <div className={cn(className, 'flex flex-1')}>
       <PizzaImage imageUrl={imageUrl} size={size} />
