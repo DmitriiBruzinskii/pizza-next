@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
-import { useSet } from "react-use";
 import { Ingredient, ProductItem } from "@prisma/client";
 import { Button } from "../ui";
 import { Title } from "./Title";
@@ -8,6 +7,7 @@ import { PizzaImage } from "./PizzaImage";
 import { GroupVariants } from "./GroupVariants";
 import { PizzaSize, PizzaType, pizzaTypes } from "@/constants/pizza";
 import { IngredientItem } from "./IngredientItem";
+import { usePizzaOptions } from "../../../hooks";
 import { getPizzaDetails } from "@/lib/getPizzaDetails";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
   items: ProductItem[];
   imageUrl: string;
   ingredients: Ingredient[];
-  onClickAddCart?: VoidFunction; 
+  onSubmit: (itemId: number, ingredients: number[]) => void; 
   className?: string;
 };
 
@@ -24,9 +24,20 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   imageUrl,
   ingredients,
   items,
-  onClickAddCart,
+  onSubmit,
   className
 }) => {
+  const {
+    size,
+    type,
+    selectedIngredients,
+    availableSizes,
+    currentItemId,
+    setSize,
+    setType,
+    addIngredient,
+  } = usePizzaOptions(items);
+
   const { totalPrice, textDetails } = getPizzaDetails(
     type,
     size,
@@ -34,6 +45,8 @@ export const ChoosePizzaForm: React.FC<Props> = ({
     ingredients,
     selectedIngredients,
   );
+
+  const handleClickAdd = () => currentItemId && onSubmit(currentItemId, Array.from(selectedIngredients));
 
   return (
     <div className={cn(className, 'flex flex-1')}>
