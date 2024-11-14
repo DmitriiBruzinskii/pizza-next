@@ -6,8 +6,9 @@ import { Button } from "../ui";
 import { Title } from "./Title";
 import { PizzaImage } from "./PizzaImage";
 import { GroupVariants } from "./GroupVariants";
-import { mapPizzaType, PizzaSize, pizzaSizes, PizzaType, pizzaTypes } from "@/constants/pizza";
+import { PizzaSize, PizzaType, pizzaTypes } from "@/constants/pizza";
 import { IngredientItem } from "./IngredientItem";
+import { getPizzaDetails } from "@/lib/getPizzaDetails";
 
 interface Props {
   name: string,
@@ -26,36 +27,13 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   onClickAddCart,
   className
 }) => {
-  const [size, setSize] = useState<PizzaSize>(20);
-  const [type, setType] = useState<PizzaType>(1);
-
-  const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]));
-
-  const pizzaPrice = items.find((item) => item.pizzaType === type && item.size === size)?.price || 0;
-  const totalIngredientsPrice = ingredients
-    .filter((ingredient) => selectedIngredients.has(ingredient.id))
-    .reduce((acc, ingredient) => acc + ingredient.price, 0);
-  const totalPrice = pizzaPrice + totalIngredientsPrice;
-
-  const textDetails = `${size} см, ${mapPizzaType[type]} пицца`;
-
-  const handleClickAdd = () => {
-    onClickAddCart?.();
-  };
-
-  const availableTypes = items.filter((item) => item.pizzaType === type);
-  const availableSizes = pizzaSizes.map((item) => ({
-    name: item.name,
-    value: item.value,
-    disabled: !availableTypes.some((pizza) => Number(pizza.size) === Number(item.value))
-  }));
-
-  useEffect(() => {
-    const isAvailableSize = availableSizes?.find((item) => Number(item.value) === size && !item.disabled);
-    const availableSize = availableSizes?.find((item) => !item.disabled);
-
-    if (!isAvailableSize && availableSize) setSize(Number(availableSize.value) as PizzaSize);
-  }, [type]);
+  const { totalPrice, textDetails } = getPizzaDetails(
+    type,
+    size,
+    items,
+    ingredients,
+    selectedIngredients,
+  );
 
   return (
     <div className={cn(className, 'flex flex-1')}>
