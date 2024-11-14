@@ -28,6 +28,13 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   const [type, setType] = useState<PizzaType>(1);
 
   const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]));
+
+  const pizzaPrice = items.find((item) => item.pizzaType === type && item.size === size)?.price || 0;
+  const totalIngredientsPrice = ingredients
+    .filter((ingredient) => selectedIngredients.has(ingredient.id))
+    .reduce((acc, ingredient) => acc + ingredient.price, 0);
+  const totalPrice = pizzaPrice + totalIngredientsPrice;
+
   const textDetails = `${size} см, ${mapPizzaType[type]} пицца`;
   return (
     <div className={cn(className, 'flex flex-1')}>
@@ -60,7 +67,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
         </div>
 
         <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
-          Добавить в корзину за 300 ₽
+          Добавить в корзину за {totalPrice} ₽
         </Button>
       </div>
     </div>
