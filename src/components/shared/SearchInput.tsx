@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { Api } from '../../../services/apiClients';
+import { Api } from '@/services/apiClients';
 import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
 import { useClickAway, useDebounce } from 'react-use';

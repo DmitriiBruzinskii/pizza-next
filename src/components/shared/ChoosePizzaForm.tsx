@@ -7,7 +7,7 @@ import { PizzaImage } from "./PizzaImage";
 import { GroupVariants } from "./GroupVariants";
 import { PizzaSize, PizzaType, pizzaTypes } from "@/constants/pizza";
 import { IngredientItem } from "./IngredientItem";
-import { usePizzaOptions } from "../../../hooks";
+import { usePizzaOptions } from "@/hooks";
 import { getPizzaDetails } from "@/lib/getPizzaDetails";
 
 interface Props {
@@ -15,7 +15,8 @@ interface Props {
   items: ProductItem[];
   imageUrl: string;
   ingredients: Ingredient[];
-  onSubmit: (itemId: number, ingredients: number[]) => void; 
+  onSubmit: (itemId: number, ingredients: number[]) => void;
+  loading?: boolean,
   className?: string;
 };
 
@@ -25,6 +26,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   ingredients,
   items,
   onSubmit,
+  loading,
   className
 }) => {
   const {
@@ -78,7 +80,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
           </div>
         </div>
 
-        <Button onClick={handleClickAdd} className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
+        <Button loading={loading} onClick={handleClickAdd} className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
           Добавить в корзину за {totalPrice} ₽
         </Button>
       </div>

@@ -1,4 +1,4 @@
-import { prisma } from './../../prisma/prisma-client';
+import { prisma } from '../prisma/prisma-client';
 import { calcCartItemTotalPrice } from "./calcCartItemTotalPrice";
 
 export const updateCartTotalAmount =  async (token?: string) => {

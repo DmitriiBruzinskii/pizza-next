@@ -1,4 +1,4 @@
-import { prisma } from '../../../../../prisma/prisma-client';
+import { prisma } from '../../../../prisma/prisma-client';
 import { notFound } from 'next/navigation';
 
 export default async function ProductPage({ params: { id } }: { params: { id: string } }) {

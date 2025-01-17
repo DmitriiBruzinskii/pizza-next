@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { useIntersection } from 'react-use';
 import { ProductCard } from "./ProductCard";
-import { useCategoryStore } from "../../../store/category";
+import { useCategoryStore } from "@/store/category";
 import { Title } from "./Title";
 import { cn } from "@/lib/utils";
 

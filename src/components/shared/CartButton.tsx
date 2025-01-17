@@ -8,9 +8,10 @@ import { CartDrawer } from './CartDrawer';
 
 interface Props {
   className?: string;
+  loading?: boolean;
 }
 
-export const CartButton: React.FC<Props> = ({ className }) => {
+export const CartButton: React.FC<Props> = ({ className, loading }) => {
 
   return (
     <CartDrawer>

@@ -19,7 +19,7 @@ import { Title } from './Title';
 import { cn } from '@/lib/utils';
 import { CartDrawerItem } from './CartDrawerItem';
 import { getCartItemDetails } from '@/lib/getCartItemDetails';
-import { useCartStore } from '../../../store/cart';
+import { useCartStore } from '@/store/cart';
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCartStore();
@@ -94,7 +94,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
                   <Link href="/checkout">
                     <Button
                       onClick={() => setRedirecting(true)}
-                      loading={redirecting}
+                      // loading={redirecting}
                       type="submit"
                       className="w-full h-12 text-base">
                       Оформить заказ

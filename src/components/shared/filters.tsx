@@ -1,7 +1,7 @@
 'use client';
 
 import React, { FC } from 'react';
-import { useFilters, useIngredients, useQueryFilters  } from '../../../hooks';
+import { useFilters, useIngredients, useQueryFilters  } from '@/hooks'
 import { Title } from './Title';
 import { CheckboxFiltersGroup } from './CheckboxFiltersGroup';
 
